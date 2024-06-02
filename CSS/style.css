@@ -21,9 +21,9 @@
 
 #cardContainer {
     background-color: #f9f9f9;
-    padding: 30px; /* Increase padding for bigger news cards */
+    padding: 30px;
 }
 .col-md-2:first-child,
 .col-md-2:last-child {
-    padding: 5px; /* Adjust padding for closer spacing */
+    padding: 5px;
 }
