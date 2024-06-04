@@ -3,51 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Old News</title>
+    <title>Old News Archive</title>
     <link rel="stylesheet" href="toni.css">
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#news">News</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#about">About</a></li>
+    <nav class="navbar">
+        <div class="logo">NewsAggregator</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About</a></li>
         </ul>
     </nav>
 
     <!-- Main Content -->
-    <div class="container">
-        <h1>Old News</h1>
+    <main class="content">
+        <h1>Old News Archive</h1>
 
         <!-- News Cards -->
-        <div class="card">
-            <h2>News Title 1</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
+        <div class="cards-container">
+            <div class="card">
+                <h2>News Title 1</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
 
-        <div class="card">
-            <h2>News Title 2</h2>
-            <p>Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
-        </div>
+            <div class="card">
+                <h2>News Title 2</h2>
+                <p>Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+            </div>
 
-        <div class="card">
-            <h2>News Title 3</h2>
-            <p>Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+            <div class="card">
+                <h2>News Title 3</h2>
+                <p>Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+            </div>
         </div>
 
         <!-- Ads Section -->
-        <div class="ads">
+        <aside class="ads">
             <h2>Advertisement</h2>
             <div class="ad">Ad Content 1</div>
             <div class="ad">Ad Content 2</div>
-        </div>
-    </div>
+        </aside>
+    </main>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Old News. All rights reserved.</p>
+        <p>&copy; 2024 News Aggregator. All rights reserved.</p>
     </footer>
 </body>
 </html>
