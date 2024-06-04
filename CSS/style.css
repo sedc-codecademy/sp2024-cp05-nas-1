@@ -86,6 +86,20 @@ button:hover {
     border: 1px solid #ddd;
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+}
+
+.card h2 {
+    font-size: 1.2em;
+}
+
+.card p {
+    font-size: 0.9em;
 }
 
 .sidebar {

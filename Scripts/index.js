@@ -23,8 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <h2>${article.title}</h2>
                         <img src="${article.image}" alt="${article.title}">
                         <p>${article.description}</p>
-                        <a href="${article.link}" target="_blank">Read more</a>
                     `;
+                    card.addEventListener('click', () => {
+                        window.open(article.link, '_blank');
+                    });
                     newsContainer.appendChild(card);
                 });
             });
