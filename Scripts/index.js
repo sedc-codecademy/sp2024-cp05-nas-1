@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     card.className = 'card';
                     card.innerHTML = `
                         <h2>${article.title}</h2>
+                        <img src="${article.image}" alt="${article.title}">
                         <p>${article.description}</p>
                         <a href="${article.link}" target="_blank">Read more</a>
                     `;
@@ -30,5 +31,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     fetchNews('/api/news');
-    
 });

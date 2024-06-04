@@ -6,7 +6,6 @@ body {
 }
 
 .navbar {
-    
     background-color: #333;
     color: #fff;
     display: flex;
@@ -43,9 +42,16 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+}
+
+.footer-links a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
 }
 
 .content {
@@ -80,4 +86,18 @@ button:hover {
     border: 1px solid #ddd;
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+    background-color: #f4f4f4;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.ads {
+    border: 1px solid #ccc;
+}
+
+.promotions {
+    border: 1px solid #aaa;
 }
