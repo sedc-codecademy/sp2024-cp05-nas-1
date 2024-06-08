@@ -1,7 +1,8 @@
 import { RenderAds } from './render-ads.js';
 
 // Example ad data
-const ads = [
+const ads =
+[
     { path: 'Media/adSample1.gif' },
     { path: 'Media/adSample2.gif' },
     { path: 'Media/adSample3.webp' },
@@ -12,9 +13,11 @@ const ads = [
 const adContainerIds = ['left-ad-1', 'left-ad-2', 'right-ad-1', 'right-ad-2'];
 
 // Function to shuffle ads
-function shuffleAds() {
+function shuffleAds()
+{
     // Shuffle the ad array
-    for (let i = ads.length - 1; i > 0; i--) {
+    for (let i = ads.length - 1; i > 0; i--)
+    {
         const j = Math.floor(Math.random() * (i + 1));
         [ads[i], ads[j]] = [ads[j], ads[i]];
     }

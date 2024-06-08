@@ -1,6 +1,7 @@
 import { ApiService } from "./api-service.js";
 import { News } from "./news.js";
 import { Render } from "./render.js";
+
 export class NewsService
 {
   constructor()
@@ -21,12 +22,12 @@ export class NewsService
             {
                 throw new Error("No news found! Try again");
             }
-            console.log("tuka");
+            //console.log("tuka");
             //console.log(newsData);
             const mappedNews = this.mapNewsData(newsData);
             this.testArray = mappedNews;
-            console.log("tuka");
-            console.log(this.testArray);
+            //console.log("tuka");
+            //console.log(this.testArray);
             Render.main(newsData, this.cardContainer);
     }
     catch (error)
