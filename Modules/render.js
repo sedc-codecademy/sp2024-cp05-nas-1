@@ -5,7 +5,7 @@ export class Render
         news.forEach((newsItem) =>
         {
             element.innerHTML += 
-            `<div class="row justify-content-center mb-4">
+             `<div class="row justify-content-center mb-4">
                 <div class="col-auto">
                   <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
