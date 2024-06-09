@@ -2,28 +2,40 @@ export class Render
 {
     static main(news, element)
     {
+      //console.log(dayjs());
+      element.innerHTML = '';
         news.forEach((newsItem) =>
         {
+          //console.log(`${new Date(newsItem.publishDate.format('YYYY-MM-DD HH:mm:ss'))}`);
             element.innerHTML += 
              `<div class="row justify-content-center mb-4">
                 <div class="col-auto">
                   <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                       <div class="col-md-4">
-                        <img src="${newsItem.urlToImage}" class="img-fluid rounded-start" alt="${newsItem.author}">
+                        <img src="${newsItem.urlToImage}" class="img-fluid rounded-start" alt="${newsItem.title}">
                       </div>
                       <div class="col-md-8">
                         <div class="card-body">
                           <h5 class="card-title">${newsItem.title}</h5>
-                          <p class="card-text">${newsItem.description}</p>
-                          <p class="card-text"><small class="text-body-secondary">Last updated: ${new Date(newsItem.publishedAt).toLocaleString()}</small></p>
-                          <a href="${newsItem.url}" class="btn btn-primary" target="_blank">More details</a>
+                          <p class="card-text">${newsItem.description.substring(0, 100)}...</p>
+                          <p class="card-text"><small class="text-body-secondary">Published: ${dayjs(newsItem.publishDate).format('DD-MMM-YYYY')}</small></p>
+                          <a href="${newsItem.url}" class="btn btn-primary" onclick="viewFullStory(${newsItem.id})">Read more</a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>`;
+        });
+
+        document.querySelectorAll('.view-full-story').forEach(button =>
+        {
+          button.addEventListener('click', function()
+          {
+            const id = parseInt(this.getAttribute('data-id'));
+            newsService.viewFullStory(id);
+          });
         });
     }    
 }
