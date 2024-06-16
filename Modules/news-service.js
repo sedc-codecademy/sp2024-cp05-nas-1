@@ -22,7 +22,7 @@ export class NewsService
         //debugger;
         try
         {
-            const newsData = await this.apiService.fetchRssFeed();
+            const newsData = await this.apiService.fetchAllNews();
             if (newsData.length === 0)
             {
                 throw new Error("No news found! Try again");
@@ -30,8 +30,8 @@ export class NewsService
             //debugger;
             const mappedNews = this.mapNewsData(newsData);
             
-            //const mappedNewsJson = JSON.stringify(mappedNews, null, 2); // Convert to JSON with indentation
-            //console.log("Mapped News JSON:", mappedNewsJson); // Log as JSON
+            const mappedNewsJson = JSON.stringify(newsData, null, 2); // Convert to JSON with indentation
+            console.log("Mapped News JSON:", mappedNewsJson); // Log as JSON
             console.log("Fetched News:", mappedNews[1]);
             //console.log("mappedNews News:", mappedNews);
             //console.log("testArray News:", testArray);

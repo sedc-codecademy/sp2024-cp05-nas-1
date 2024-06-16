@@ -2,46 +2,46 @@ export class ApiService {
     constructor()
     {
         this.urls = [
-        // {
-        //     source: 'MIA',
-        //     feedUrl: 'https://mia.mk/feed',
-        //     title: 'title',
-        //     description: 'description',
-        //     link: 'link',
-        //     author: 'author',
-        //     pubDate: 'pubDate',
-        //     urlToImage: { query: 'enclosure', attribute: 'url' }
-        // },
-        // {
-        //     source: 'Telma',
-        //     feedUrl: 'https://telma.com.mk/feed/',
-        //     title: 'title',
-        //     description: 'content:encoded',
-        //     link: 'link',
-        //     author: 'dc:creator',
-        //     pubDate: 'pubDate',
-        //     urlToImage: { query: 'content\\:encoded, encoded', regex: /<img[^>]*src="([^"]*)"/i }
-        // },
-        // {
-        //     source: '24 Vesti',
-        //     feedUrl: 'https://admin.24.mk/api/rss.xml',
-        //     title: '',
-        //     description: 'content',
-        //     link: 'link',
-        //     author: 'dc:creator',
-        //     pubDate: 'pubDate',
-        //     urlToImage:  { query: 'img', attribute: 'src' }
-        // },
-        // {
-        //     source: 'Sitel',
-        //     feedUrl: 'https://sitel.com.mk/rss.xml',
-        //     title: 'title',
-        //     description: 'description',
-        //     link: 'link',
-        //     author: 'dc:creator',
-        //     pubDate: 'pubDate',
-        //     urlToImage: { query: 'description', regex: /<img[^>]*src="([^"]*)"/i }
-        // },
+        {
+            source: 'MIA',
+            feedUrl: 'https://mia.mk/feed',
+            title: 'title',
+            description: 'description',
+            link: 'link',
+            author: 'author',
+            pubDate: 'pubDate',
+            urlToImage: { query: 'enclosure', attribute: 'url' }
+        },
+        {
+            source: 'Telma',
+            feedUrl: 'https://telma.com.mk/feed/',
+            title: 'title',
+            description: 'content:encoded',
+            link: 'link',
+            author: 'dc:creator',
+            pubDate: 'pubDate',
+            urlToImage: { query: 'content\\:encoded, encoded', regex: /<img[^>]*src="([^"]*)"/i }
+        },
+        {
+            source: '24 Vesti',
+            feedUrl: 'https://admin.24.mk/api/rss.xml',
+            title: '',
+            description: 'content',
+            link: 'link',
+            author: 'dc:creator',
+            pubDate: 'pubDate',
+            urlToImage:  { query: 'img', attribute: 'src' }
+        },
+        {
+            source: 'Sitel',
+            feedUrl: 'https://sitel.com.mk/rss.xml',
+            title: 'title',
+            description: 'description',
+            link: 'link',
+            author: 'dc:creator',
+            pubDate: 'pubDate',
+            urlToImage: { query: 'description', regex: /<img[^>]*src="([^"]*)"/i }
+        },
         {
             source: 'Kanal5',
             feedUrl: 'https://kanal5.com.mk/rss.aspx',
@@ -52,6 +52,7 @@ export class ApiService {
             pubDate: 'pubDate',
             urlToImage: { query: 'thumbnail' }
         }];
+        this.jsonUrl = 'Storage/news.json'; // Path to your JSON file
     }
     
     async fetchRssFeed()
@@ -64,7 +65,8 @@ export class ApiService {
 
             const allArticles = [];
             debugger;
-            for (let i = 0; i < xmlData.length; i++) {
+            for (let i = 0; i < xmlData.length; i++)
+            {
                 const parsedArticles = this.parseRss(xmlData[i], this.urls[i]);
                 allArticles.push(...parsedArticles);
             }
@@ -79,6 +81,65 @@ export class ApiService {
         }
     }
 
+    async fetchJsonData()
+    {
+        try
+        {
+            const response = await fetch(this.jsonUrl);
+            if (!response.ok) 
+            {
+                throw new Error('Failed to fetch JSON data');
+            }
+            const jsonData = await response.json();
+            console.log('Fetched JSON data:', jsonData);
+            return jsonData;
+        }
+        catch (error)
+        {
+            console.error('Error fetching JSON data:', error);
+            return [];
+        }
+    }
+
+    async fetchAllNews()
+    {
+        try
+        {
+            const [rssData, jsonData] = await Promise.all([
+                this.fetchRssFeed(),
+                this.fetchJsonData()
+            ]);
+
+            const mergedData = this.deDuplicateNews([...rssData, ...jsonData]);
+            console.log('Merged and deduplicated news data:', mergedData);
+            return mergedData;
+        }
+        catch (error)
+        {
+            console.error('Error fetching all news:', error);
+            return [];
+        }
+    }
+
+    deDuplicateNews(newsData)
+    {
+        const uniqueArticles = [];
+        const seenArticles = new Set();
+    
+        for (const article of newsData)
+        {
+            const uniqueKey = `${article.title}-${article.publishDate}-${article.source}`;
+            if (seenArticles.has(uniqueKey))
+            {
+                continue; // Skip the rest of the loop if a duplicate is found
+            }
+            seenArticles.add(uniqueKey);
+            uniqueArticles.push(article);
+        }
+    
+        return uniqueArticles;
+    }
+
     parseRss(xml, urlConfig)
     {
         const filteredXml = xml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
@@ -88,41 +149,33 @@ export class ApiService {
         const articles = [];
 
         for (let i = 0; i < items.length; i++)
+        {
+            const item = items[i];
+            if (item.getElementsByTagName('script').length > 0)
             {
-                const item = items[i];
-                if (item.getElementsByTagName('script').length > 0)
-                {
-                    continue;
-                }
-                //debugger;
+                continue;
+            }
+            //debugger;
+            //console.log(urlConfig);
+            const title = this.getElementText(item, urlConfig.title);
+            let description = this.stripHtmlTags(this.getElementText(item, urlConfig.description));
+            const url = this.getElementText(item, urlConfig.link);
+            const author = this.getElementText(item, urlConfig.author);
+            const publishDate = this.getElementText(item, urlConfig.pubDate);
+            const urlToImage = this.getEnclosureUrl(item, urlConfig.urlToImage);
 
-                //console.log(urlConfig);
-                const title = this.getElementText(item, urlConfig.title);
-                //console.log(urlConfig.title);
-                //const description = this.getElementText(item, urlConfig.description);
-                let description = this.stripHtmlTags(this.getElementText(item, urlConfig.description));
-                //console.log(urlConfig.description);
-                const url = this.getElementText(item, urlConfig.link);
-                //console.log(urlConfig.link);
-                const author = this.getElementText(item, urlConfig.author);
-                //console.log(urlConfig.author);
-                const publishDate = this.getElementText(item, urlConfig.pubDate);
-                //console.log(urlConfig.pubDate);
-                const urlToImage = this.getEnclosureUrl(item, urlConfig.urlToImage);
-                //const urlToImage = this.getEnclosureUrl(item);// || this.getElementText(item, urlConfig.enclosure);
-                //console.log(this.getEnclosureUrl(item));
-
-                articles.push(
-                {
-                    title,
-                    description,
-                    url,
-                    author,
-                    publishDate,
-                    urlToImage
-                });
+            articles.push(
+            {
+                title,
+                description,
+                url,
+                author,
+                publishDate,
+                urlToImage
+            });
         }
-
+        console.log("Articles");
+        console.log(articles);
         return articles;
     }
 
