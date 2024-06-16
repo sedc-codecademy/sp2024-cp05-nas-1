@@ -4,31 +4,42 @@ export class Render
     {
       //console.log(dayjs());
       element.innerHTML = '';
-        news.forEach((newsItem) =>
-        {
-          //console.log(`${new Date(newsItem.publishDate.format('YYYY-MM-DD HH:mm:ss'))}`);
-            element.innerHTML += 
-             `<div class="row justify-content-center mb-4">
-                <div class="col-auto">
-                  <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                      <div class="col-md-4">
-                        <img src="${newsItem.urlToImage}" class="img-fluid rounded-start" alt="${newsItem.title}">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h5 class="card-title">${newsItem.title}</h5>
-                          <p class="card-text">${newsItem.description.substring(0, 100)}...</p>
-                          <p class="card-text"><small class="text-body-secondary">Published: ${dayjs(newsItem.publishDate).format('DD-MMM-YYYY')}</small></p>
-                          <a href="${newsItem.url}" class="btn btn-primary" onclick="viewFullStory(${newsItem.id})">Read more</a>
-                        </div>
-                      </div>
+      news.forEach((newsItem) =>
+      {
+        // console.log(newsItem);
+        // console.log(newsItem.urlToImage);
+        // console.log(newsItem.title);
+        // console.log(newsItem.description.substring(0, 100));
+        // console.log(newsItem.publishDate);
+        // console.log(newsItem.id);
+        // console.log(newsItem.url);
+        //console.log(`${new Date(newsItem.publishDate.format('YYYY-MM-DD HH:mm:ss'))}`);
+        element.innerHTML += `
+          <div class="row justify-content-center mb-4">
+            <div class="col-auto">
+              <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+
+                  <div class="col-md-4">
+                    <img src="${newsItem.urlToImage}" class="img-fluid rounded-start" alt="${newsItem.title}">
+                  </div>
+
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">${newsItem.title}</h5>
+                      <p class="card-text">${newsItem.description.substring(0, 100)}...</p>
+                      <p class="card-text"><small class="text-body-secondary">Published: ${dayjs(newsItem.pubDate).format('ddd, D MMM, YYYY HH:mm')}</small></p>
+                      <a href="" class="btn btn-primary" onclick="viewFullStory(${newsItem.id})">Read more</a>
+                      <a href="${newsItem.url}" class="btn btn-primary" onclick="viewFullStory(${newsItem.id})">View source</a>
                     </div>
                   </div>
                 </div>
-              </div>`;
+              </div>
+            </div>
+          </div>`;
         });
 
+        //NOT WORKING... I think it should be outside of main()...
         document.querySelectorAll('.view-full-story').forEach(button =>
         {
           button.addEventListener('click', function()

@@ -4,73 +4,69 @@ import { Render } from "./render.js";
 
 export class NewsService
 {
-  constructor()
-  {
-    this.apiService = new ApiService();
-    this.notification = document.getElementById("notification");
-    this.cardContainer = document.getElementById("cardContainer");
-    this.fullStoryContainer = document.getElementById("fullStoryContainer");
-    this.fullStoryContent = document.getElementById("fullStoryContent");
-
-    this.testArray = [];
-  }
-
-  async mainNews(newsData)
-  {
-    try
+    constructor(apiService)
     {
-        newsData = await this.apiService.fetchRssFeed();
-        if(newsData.length === 0)
+        this.apiService = apiService;
+        this.notification = document.getElementById("notification");
+        this.cardContainer = document.getElementById("cardContainer");
+        this.fullStoryContainer = document.getElementById("fullStoryContainer");
+        this.fullStoryContent = document.getElementById("fullStoryContent");
+        this.testArray = [];
+
+        // Fetch news immediately
+        this.mainNews();
+    }
+
+    async mainNews()
+    {
+        //debugger;
+        try
+        {
+            const newsData = await this.apiService.fetchRssFeed();
+            if (newsData.length === 0)
             {
                 throw new Error("No news found! Try again");
             }
-            //console.log("tuka");
-            //console.log(newsData);
+            //debugger;
             const mappedNews = this.mapNewsData(newsData);
-            this.testArray = mappedNews;
-            //console.log("tuka");
-            //console.log(this.testArray);
+            
+            //const mappedNewsJson = JSON.stringify(mappedNews, null, 2); // Convert to JSON with indentation
+            //console.log("Mapped News JSON:", mappedNewsJson); // Log as JSON
+            console.log("Fetched News:", mappedNews[1]);
+            //console.log("mappedNews News:", mappedNews);
+            //console.log("testArray News:", testArray);
             Render.main(mappedNews, this.cardContainer);
+        }
+        catch (error)
+        {
+            this.notification.innerHTML = `<div class='alert-danger'>${error.message}</div>`;
+        }
     }
-    catch (error)
+
+    //add Id in front of every item.
+    //TO-DO: read the last Id from the json (json.lenght) and contiue from there
+    mapNewsData(news)
     {
-      this.notification.innerHTML = `<div class='alert-danger'>${error}</div>`;
+        return news.map((newsItem, index) => new News({ ...newsItem, id: index }));
     }
-  }
 
-  mapNewsData(news)
-  {
-    return news.map((news) => new News(news))
-  }
-
-  viewFullStory(id)
-  {
-    const newsItem = this.testArray.find((item) => item.id === id);
-    if (newsItem)
+    viewFullStory(id)
     {
-      
-      this.fullStoryContent.innerHTML = `
-        <h2>${newsItem.title}</h2>
-        <p><small>Published: ${new Date(newsItem.publishDate)}</small></p>
-        <img src="${newsItem.urlToImage}" class="img-fluid mb-3" alt="${newsItem.title}">
-        <p>${newsItem.description}</p>`;
-      this.cardContainer.style.display = 'none';
-      this.fullStoryContainer.style.display = 'block';
+        const newsItem = this.testArray.find(item => item.id === id);
+        if (newsItem) {
+            this.fullStoryContent.innerHTML = `
+                <h2>${newsItem.title}</h2>
+                <p><small>Published: ${new Date(newsItem.pubDate)}</small></p>
+                <img src="${newsItem.enclosure}" class="img-fluid mb-3" alt="${newsItem.title}">
+                <p>${newsItem.description}</p>`;
+            this.cardContainer.style.display = 'none';
+            this.fullStoryContainer.style.display = 'block';
+        }
     }
-  }
 
-  hideFullStory()
-  {
-    this.fullStoryContainer.style.display = 'none';
-    this.cardContainer.style.display = 'block';
-  }
-
-  registerEvents()
-  {
-    console.log(`Event fired`);
-    this.mainNews();
-  }
+    hideFullStory()
+    {
+        this.fullStoryContainer.style.display = 'none';
+        this.cardContainer.style.display = 'block';
+    }
 }
-
-const newsService = new NewsService();
-export default newsService;
