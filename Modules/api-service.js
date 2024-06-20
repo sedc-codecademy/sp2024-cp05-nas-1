@@ -60,6 +60,10 @@ export class ApiService {
         try
         {
             debugger;
+            // const responese1 = await fetch("https://localhost:7106/Menu");
+            // console.log(responese1);
+            // const jsonData = await responese1.json();
+            // console.log(jsonData);
             const responses = await Promise.all(this.urls.map(urlConfig => fetch(urlConfig.feedUrl)));
             const xmlData = await Promise.all(responses.map(response => response.text()));
 
