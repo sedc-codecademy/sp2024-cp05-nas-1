@@ -1,5 +1,6 @@
 import { ApiService } from "./api-service.js";
 import { News } from "./news.js";
+import { RenderFullStory } from "./render-full-story.js";
 import { Render } from "./render.js";
 
 export class NewsService
@@ -29,7 +30,7 @@ export class NewsService
             }
             //debugger;
             const mappedNews = this.mapNewsData(newsData);
-            
+            this.testArray = mappedNews;
             const mappedNewsJson = JSON.stringify(newsData, null, 2); // Convert to JSON with indentation
             console.log("Mapped News JSON:", mappedNewsJson); // Log as JSON
             console.log("Fetched News:", mappedNews[1]);
@@ -50,17 +51,26 @@ export class NewsService
         return news.map((newsItem, index) => new News({ ...newsItem, id: index }));
     }
 
-    viewFullStory(id)
+    async viewFullStory(id)
     {
-        const newsItem = this.testArray.find(item => item.id === id);
-        if (newsItem) {
-            this.fullStoryContent.innerHTML = `
-                <h2>${newsItem.title}</h2>
-                <p><small>Published: ${new Date(newsItem.pubDate)}</small></p>
-                <img src="${newsItem.enclosure}" class="img-fluid mb-3" alt="${newsItem.title}">
-                <p>${newsItem.description}</p>`;
-            this.cardContainer.style.display = 'none';
-            this.fullStoryContainer.style.display = 'block';
+        try
+        {
+            debugger;
+            const newsItem = await this.testArray.find(item => item.id === id);
+            if (newsItem)
+            {
+                this.cardContainer.style.display = 'none';
+                this.fullStoryContainer.style.display = 'block';
+                RenderFullStory.fullStory(newsItem, fullStoryContent);
+            }
+            else
+            {
+                console.error('News item not found');
+            }
+        }
+        catch (error)
+        {
+            console.error('Error viewing full story:', error);
         }
     }
 

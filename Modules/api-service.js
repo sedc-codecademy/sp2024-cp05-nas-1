@@ -1,3 +1,4 @@
+import { getQueryParams } from "./full-story.js";
 export class ApiService {
     constructor()
     {
@@ -53,13 +54,14 @@ export class ApiService {
             urlToImage: { query: 'thumbnail' }
         }];
         this.jsonUrl = 'Storage/news.json'; // Path to your JSON file
+        this.queryParams = getQueryParams();
     }
     
     async fetchRssFeed()
     {
         try
         {
-            debugger;
+            //debugger;
             // const responese1 = await fetch("https://localhost:7106/Menu");
             // console.log(responese1);
             // const jsonData = await responese1.json();
@@ -68,7 +70,6 @@ export class ApiService {
             const xmlData = await Promise.all(responses.map(response => response.text()));
 
             const allArticles = [];
-            debugger;
             for (let i = 0; i < xmlData.length; i++)
             {
                 const parsedArticles = this.parseRss(xmlData[i], this.urls[i]);
@@ -227,7 +228,7 @@ export class ApiService {
     getEnclosureUrl2(item)
     {
         // Debugging and logging
-        debugger;
+        //debugger;
         console.log(item);
 
         // Check for enclosure tag first
@@ -293,5 +294,13 @@ export class ApiService {
             }
         }
         return '';
+    }
+    filterNewsByQuery(newsData, queryParams)
+    {
+        if (queryParams.id)
+        {
+            return newsData.filter(article => article.id.toString() === queryParams.id);
+        }
+        return newsData;
     }
 }
