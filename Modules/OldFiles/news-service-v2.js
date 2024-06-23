@@ -38,7 +38,7 @@ export class NewsService {
             url: item.link,
             author: item.author,
             publishDate: new Date(item.pubDate),
-            urlToImage: item.enclosure // Assuming enclosure URL is used as image URL
+            urlToImage: item.enclosure
         }));
     }
 
@@ -61,8 +61,6 @@ export class NewsService {
     }
 
     registerEvents() {
-        console.log(`Event fired`); // Placeholder for event handling logic
-        // Example usage:
-        // this.mainNews('https://mia.mk/feed'); // Replace with actual RSS feed URL
+        console.log(`Event fired`);
     }
 }

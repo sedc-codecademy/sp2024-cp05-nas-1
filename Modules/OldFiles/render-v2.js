@@ -33,9 +33,9 @@ export class Render {
         // Add event listeners for 'Read more' buttons using querySelectorAll
         document.querySelectorAll('.view-full-story').forEach(button => {
             button.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default link behavior if necessary
+                event.preventDefault();
                 const id = parseInt(this.getAttribute('data-id'));
-                newsService.viewFullStory(id); // Assuming newsService is globally accessible
+                newsService.viewFullStory(id);
             });
         });
     }
