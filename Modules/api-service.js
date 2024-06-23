@@ -2,6 +2,7 @@ import { getQueryParams } from "./full-story.js";
 export class ApiService {
     constructor()
     {
+        //When the backend is available, this will be replaced with the API endpoint
         this.urls = [
         {
             source: 'MIA',
@@ -29,7 +30,7 @@ export class ApiService {
             title: '',
             description: 'content',
             link: 'link',
-            author: 'dc:creator',
+            author: 'author',
             pubDate: 'pubDate',
             urlToImage:  { query: 'img', attribute: 'src' }
         },
@@ -62,6 +63,7 @@ export class ApiService {
         try
         {
             //debugger;
+            //THIS WILL BE USED WHEN THE BACKEND IS AVAILABLE
             // const responese1 = await fetch("https://localhost:7106/Menu");
             // console.log(responese1);
             // const jsonData = await responese1.json();
@@ -126,8 +128,10 @@ export class ApiService {
         }
     }
 
+    //obsolite code once the backend is available
     deDuplicateNews(newsData)
     {
+        
         const uniqueArticles = [];
         const seenArticles = new Set();
     
@@ -145,6 +149,7 @@ export class ApiService {
         return uniqueArticles;
     }
 
+    //obsolite code once the backend is available
     parseRss(xml, urlConfig)
     {
         const filteredXml = xml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
@@ -184,6 +189,7 @@ export class ApiService {
         return articles;
     }
 
+    //obsolite code once the backend is available
     stripHtmlTags(text, allowedTags = [])
     {
         if (allowedTags.length === 0)
@@ -196,12 +202,14 @@ export class ApiService {
         return text.replace(regex, '');
     }
 
+    //obsolite code once the backend is available
     getElementText(parent, tagName)
     {
         const element = parent.getElementsByTagName(tagName)[0];
         return element ? element.textContent.trim() : '';
     }
 
+    //obsolite code once the backend is available
     getEnclosureUrl(item, imageConfig)
     {
         const element = item.querySelector(imageConfig.query);
@@ -225,6 +233,7 @@ export class ApiService {
         return '';
     }
 
+    //TEST
     getEnclosureUrl2(item)
     {
         // Debugging and logging
@@ -282,6 +291,7 @@ export class ApiService {
         // return '';
     }
 
+    //TEST
     getEnclosureUrl1(item)
     {
         const contentEncoded = item.getElementsByTagName('content:encoded')[0];
@@ -295,6 +305,7 @@ export class ApiService {
         }
         return '';
     }
+    
     filterNewsByQuery(newsData, queryParams)
     {
         if (queryParams.id)

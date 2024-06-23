@@ -2,6 +2,7 @@ import { ApiService } from "./api-service.js";
 import { News } from "./news.js";
 import { RenderFullStory } from "./render-full-story.js";
 import { Render } from "./render.js";
+import { RenderArchive } from "./render-archive.js";
 
 export class NewsService
 {
@@ -10,6 +11,7 @@ export class NewsService
         this.apiService = apiService;
         this.notification = document.getElementById("notification");
         this.cardContainer = document.getElementById("cardContainer");
+        this.cardContainerArchive = document.getElementById("cardContainerArchive");
         this.fullStoryContainer = document.getElementById("fullStoryContainer");
         this.fullStoryContent = document.getElementById("fullStoryContent");
         this.testArray = [];
@@ -49,6 +51,39 @@ export class NewsService
     mapNewsData(news)
     {
         return news.map((newsItem, index) => new News({ ...newsItem, id: index }));
+    }
+
+    async archiveNews()
+    {
+        //debugger;
+        //READ FROM JSON FILE ORDERED BY DATE DESCENDING
+        // try
+        // {
+        //     const newsData = await this.apiService.fetchAllNews();
+        //     if (newsData.length === 0)
+        //     {
+        //         throw new Error("No news found! Try again");
+        //     }
+        //     //debugger;
+        //     const mappedNews = this.mapNewsData(newsData);
+        //     this.testArray = mappedNews;
+        //     const mappedNewsJson = JSON.stringify(newsData, null, 2); // Convert to JSON with indentation
+        //     console.log("Mapped News JSON:", mappedNewsJson); // Log as JSON
+        //     console.log("Fetched News:", mappedNews[1]);
+        //     //console.log("mappedNews News:", mappedNews);
+        //     //console.log("testArray News:", testArray);
+        //     Render.main(mappedNews, this.cardContainer);
+        // }
+        // catch (error)
+        // {
+        //     this.notification.innerHTML = `<div class='alert-danger'>${error.message}</div>`;
+        // }
+        console.log(this.testArray);
+        console.log(this.cardContainer);
+        // this.cardContainer.style.display = 'none';
+        // this.cardContainerArchive.style.display = 'block';
+        //this.cardContainer.innerHTML = '';
+        RenderArchive.main(this.testArray, this.cardContainer); // or this.cardContainerArchive
     }
 
     async viewFullStory(id)

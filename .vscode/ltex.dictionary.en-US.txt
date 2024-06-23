@@ -20,3 +20,6 @@ fa-facebook-f
 fa-linkedin-in
 fas
 NavBar
+notificationArchive
+cardContainerArchive
+archiveLink
