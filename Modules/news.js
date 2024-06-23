@@ -1,22 +1,21 @@
 export class News
 {
-    constructor(
-    {
+    constructor({
         id,
-        author,
         title,
         url,
-        source,
-        name,
+        description,
+        publishDate,
+        author,
         urlToImage
     })
     {
-        this.id = id,
-        this.author = author,
-        this.title = title,
-        this.url = url,
-        this.source = source,
-        this.name = name,
-        this.urlToImage = urlToImage
+        this.id = id;
+        this.title = title;
+        this.url = url;
+        this.description = description;
+        this.publishDate = publishDate;
+        this.author = author;
+        this.urlToImage = urlToImage;
     }
 }

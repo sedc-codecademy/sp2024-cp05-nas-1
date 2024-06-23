@@ -1,4 +1,4 @@
-export class Render
+export class RenderArchive
 {
     static main(news, element)
     {
@@ -31,7 +31,7 @@ export class Render
           </div>`;
         });
 
-        Render.addEventListeners();
+        RenderArchive.addEventListeners();
     };
 
     static addEventListeners()

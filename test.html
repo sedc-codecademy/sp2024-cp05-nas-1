@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Feeds to JSON</title>
+</head>
+<body>
+    <h1>Fetch and Convert RSS Feeds to JSON</h1>
+    <script>
+        async function fetchAndConvertRSSFeeds(urls) {
+            try {
+                // Fetch all RSS feed URLs concurrently
+                const responses = await Promise.all(urls.map(url => fetch(url)));
+
+                // Check if all responses are OK
+                responses.forEach(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch: ${response.url}`);
+                    }
+                });
+
+                // Parse each response as text
+                const xmlTexts = await Promise.all(responses.map(response => response.text()));
+
+                // Convert XML to JSON
+                const jsonObjects = xmlTexts.map(xmlText => xmlToJson(parseXml(xmlText)));
+
+                return jsonObjects;
+            } catch (error) {
+                console.error('Error fetching or converting RSS feeds:', error);
+            }
+        }
+
+        function parseXml(xmlStr) {
+            const parser = new DOMParser();
+            return parser.parseFromString(xmlStr, 'application/xml');
+        }
+
+        function xmlToJson(xml) {
+            if (!xml || xml.nodeType !== 1) {
+                return null;
+            }
+            const obj = {};
+
+            // Handle element attributes
+            if (xml.attributes.length > 0) {
+                obj["@attributes"] = {};
+                for (let j = 0; j < xml.attributes.length; j++) {
+                    const attribute = xml.attributes.item(j);
+                    obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+                }
+            }
+
+            // Handle child elements
+            if (xml.childNodes.length > 0) {
+                for (let i = 0; i < xml.childNodes.length; i++) {
+                    const item = xml.childNodes.item(i);
+                    if (item.nodeType === 3) { // text node
+                        obj["#text"] = item.nodeValue.trim();
+                    } else if (item.nodeType === 1) { // element node
+                        const nodeName = item.nodeName;
+                        if (typeof obj[nodeName] === "undefined") {
+                            obj[nodeName] = xmlToJson(item);
+                        } else {
+                            if (typeof obj[nodeName].push === "undefined") {
+                                const old = obj[nodeName];
+                                obj[nodeName] = [];
+                                obj[nodeName].push(old);
+                            }
+                            obj[nodeName].push(xmlToJson(item));
+                        }
+                    }
+                }
+            }
+            return obj;
+        }
+
+        const urls = [
+            'https://mia.mk/feed',
+    'https://telma.com.mk/feed/'
+        ];
+
+        fetchAndConvertRSSFeeds(urls).then(jsonObjects => {
+            console.log(jsonObjects);
+        });
+    </script>
+</body>
+</html>
