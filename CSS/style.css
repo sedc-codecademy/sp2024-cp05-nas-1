@@ -90,11 +90,9 @@ button:hover {
     gap: 20px;
 }
 
-/* .cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-} */
+#dropdownItems .dropdown {
+    display: inline-block;
+}
 
 .card {
     background-color: #fff;

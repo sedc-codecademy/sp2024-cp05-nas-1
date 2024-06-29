@@ -3,7 +3,7 @@ export class News
     constructor({
         id,
         title,
-        url,
+        link,
         description,
         publishDate,
         author,
@@ -12,7 +12,7 @@ export class News
     {
         this.id = id;
         this.title = title;
-        this.url = url;
+        this.link = link;
         this.description = description;
         this.publishDate = publishDate;
         this.author = author;

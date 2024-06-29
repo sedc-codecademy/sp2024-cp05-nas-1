@@ -1,4 +1,4 @@
-import { RenderAds } from './render-ads.js';
+import { RenderAds } from '../Renders/render-ads.js';
 
 // Example ad data
 const ads =

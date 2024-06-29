@@ -53,16 +53,30 @@
 
             <!-- Main Content -->
             <div class="col-md-8">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Items per page
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">1</a></li>
-                        <li><a class="dropdown-item" href="#">5</a></li>
-                        <li><a class="dropdown-item" href="#">15</a></li>
-                    </ul>
+                
+                <div id="dropdownItems">
+                    <div class="dropdown d-inline-block mr-3">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Items per page
+                        </button>
+                        <ul class="dropdown-menu" id="itemsPerPageDropdown">
+                            <li><a class="dropdown-item" href="#" data-value="5">5</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="10">10</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="15">15</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown d-inline-block">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Card Layout
+                        </button>
+                        <ul class="dropdown-menu" id="layoutDropdown">
+                            <li><a class="dropdown-item" href="#" data-value="single">Single Column</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="triple">Triple Column</a></li>
+                        </ul>
+                    </div>
                 </div>
+
                 <div id="notification"></div>
                 <div id="cardContainer"></div>
                 <div id="fullStoryContainer" style="display: none;">

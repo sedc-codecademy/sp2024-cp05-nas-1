@@ -1,14 +1,16 @@
 import { ApiService } from "./api-service.js";
 import { News } from "./news.js";
-import { RenderFullStory } from "./render-full-story.js";
-import { Render } from "./render.js";
-import { RenderArchive } from "./render-archive.js";
+import { RenderFullStory } from "../Renders/render-full-story.js";
+import { Render } from "../Renders/render.js";
+import { RenderArchive } from "../Renders/render-archive.js";
+import { PaginationService } from "./pagination-service.js";
 
 export class NewsService
 {
-    constructor(apiService)
+    constructor()
     {
-        this.apiService = apiService;
+        this.apiService = new ApiService();
+        this.paginationService = new PaginationService(this);
         this.notification = document.getElementById("notification");
         this.cardContainer = document.getElementById("cardContainer");
         this.fullStoryContainer = document.getElementById("fullStoryContainer");
@@ -19,10 +21,12 @@ export class NewsService
         this.paginationContainer = document.getElementById('paginationContainer');
         this.paginationContainerArchive = document.getElementById('paginationContainerArchive');
 
+        this.dropdownItems = document.getElementById('dropdownItems');
+
         this.testArray = [];
 
-        this.currentPage = 1; // Current page
-        this.itemsPerPage = 3; // Number of news items per page
+        this.currentPage = this.paginationService.currentPage; // Current page
+        this.itemsPerPage = this.paginationService.itemsPerPage; // Number of news items per page
 
         //debugger;
         // Fetch news immediately
@@ -33,7 +37,7 @@ export class NewsService
     {
         try
         {
-            const newsData = await this.apiService.fetchAllNews();
+            const newsData = await this.apiService.fetchRssFeed();
             if (newsData.length === 0)
             {
                 throw new Error("No news found! Try again");
@@ -115,86 +119,86 @@ export class NewsService
         const end = start + this.itemsPerPage;
         const newsToRender = this.testArray.slice(start, end);
         Render.main(newsToRender, cardContainer);
-        this.renderPagination(paginationContainerId);
+        this.paginationService.renderPagination();//paginationContainerId);
     }
 
-    renderPagination(paginationContainerId = 'paginationContainer')
-    {
-        const totalPages = Math.ceil(this.testArray.length / this.itemsPerPage);
-        const currentPage = this.currentPage;
-        const pageRange = 3; // Number of pages to show in the middle range
-        let paginationHTML = `<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">`;
+    // renderPagination(paginationContainerId = 'paginationContainer')
+    // {
+    //     const totalPages = Math.ceil(this.testArray.length / this.itemsPerPage);
+    //     const currentPage = this.currentPage;
+    //     const pageRange = 3; // Number of pages to show in the middle range
+    //     let paginationHTML = `<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">`;
     
-        // Previous Button
-        paginationHTML += `
-            <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-                <a class="page-link" href="#" data-page="${currentPage - 1}" tabindex="-1">Previous</a>
-            </li>`;
+    //     // Previous Button
+    //     paginationHTML += `
+    //         <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+    //             <a class="page-link" href="#" data-page="${currentPage - 1}" tabindex="-1">Previous</a>
+    //         </li>`;
     
-        // First Page
-        if (currentPage > pageRange + 1)
-        {
-            paginationHTML += `
-                <li class="page-item">
-                    <a class="page-link" href="#" data-page="1">1</a>
-                </li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">...</a>
-                </li>`;
-        }
+    //     // First Page
+    //     if (currentPage > pageRange + 1)
+    //     {
+    //         paginationHTML += `
+    //             <li class="page-item">
+    //                 <a class="page-link" href="#" data-page="1">1</a>
+    //             </li>
+    //             <li class="page-item disabled">
+    //                 <a class="page-link" href="#" tabindex="-1">...</a>
+    //             </li>`;
+    //     }
     
-        // Middle Pages
-        const startPage = Math.max(1, currentPage - pageRange);
-        const endPage = Math.min(totalPages, currentPage + pageRange);
+    //     // Middle Pages
+    //     const startPage = Math.max(1, currentPage - pageRange);
+    //     const endPage = Math.min(totalPages, currentPage + pageRange);
     
-        for (let i = startPage; i <= endPage; i++)
-        {
-            paginationHTML += `
-                <li class="page-item ${i === currentPage ? 'active' : ''}">
-                    <a class="page-link" href="#" data-page="${i}">${i}</a>
-                </li>`;
-        }
+    //     for (let i = startPage; i <= endPage; i++)
+    //     {
+    //         paginationHTML += `
+    //             <li class="page-item ${i === currentPage ? 'active' : ''}">
+    //                 <a class="page-link" href="#" data-page="${i}">${i}</a>
+    //             </li>`;
+    //     }
     
-        // Last Page
-        if (currentPage < totalPages - pageRange)
-        {
-            paginationHTML += `
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">...</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" data-page="${totalPages}">${totalPages}</a>
-                </li>`;
-        }
+    //     // Last Page
+    //     if (currentPage < totalPages - pageRange)
+    //     {
+    //         paginationHTML += `
+    //             <li class="page-item disabled">
+    //                 <a class="page-link" href="#" tabindex="-1">...</a>
+    //             </li>
+    //             <li class="page-item">
+    //                 <a class="page-link" href="#" data-page="${totalPages}">${totalPages}</a>
+    //             </li>`;
+    //     }
     
-        // Next Button
-        paginationHTML += `
-            <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-                <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
-            </li>
-        </ul></nav>`;
+    //     // Next Button
+    //     paginationHTML += `
+    //         <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+    //             <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
+    //         </li>
+    //     </ul></nav>`;
     
-        const paginationContainer = document.getElementById(paginationContainerId);
-        paginationContainer.innerHTML = paginationHTML;
-        this.addPaginationEventListeners(paginationContainer);
-    }
+    //     const paginationContainer = document.getElementById(paginationContainerId);
+    //     paginationContainer.innerHTML = paginationHTML;
+    //     this.addPaginationEventListeners(paginationContainer);
+    // }
 
-    addPaginationEventListeners(container = this.cardContainer)
-    {
-        container.querySelectorAll('.page-link').forEach(button =>
-        {
-            button.addEventListener('click', (event) =>
-            {
-                event.preventDefault();
-                const page = parseInt(event.target.getAttribute('data-page'));
-                if (page > 0 && page <= Math.ceil(this.testArray.length / this.itemsPerPage))
-                {
-                    this.currentPage = page;
-                    this.renderPage(page, container.parentElement.previousElementSibling, container.id);
-                }
-            });
-        });
-    }
+    // addPaginationEventListeners(container = this.cardContainer)
+    // {
+    //     container.querySelectorAll('.page-link').forEach(button =>
+    //     {
+    //         button.addEventListener('click', (event) =>
+    //         {
+    //             event.preventDefault();
+    //             const page = parseInt(event.target.getAttribute('data-page'));
+    //             if (page > 0 && page <= Math.ceil(this.testArray.length / this.itemsPerPage))
+    //             {
+    //                 this.currentPage = page;
+    //                 this.renderPage(page, container.parentElement.previousElementSibling, container.id);
+    //             }
+    //         });
+    //     });
+    // }
 
     async viewFullStory(id)
     {
@@ -206,7 +210,7 @@ export class NewsService
                 
                 this.cardContainer.style.display = 'none';
                 this.fullStoryContainer.style.display = 'block';
-                this.hidePagination();
+                this.hideElements();
                 RenderFullStory.fullStory(newsItem, this.fullStoryContent);
             }
             else
@@ -224,18 +228,28 @@ export class NewsService
     {
         this.fullStoryContainer.style.display = 'none';
         this.cardContainer.style.display = 'block';
-        this.showPagination();
+        this.showElements();
     }
 
-    hidePagination()
+    hideElements()
     {
         this.paginationContainer.style.visibility = 'hidden';
         this.paginationContainerArchive.style.visibility = 'hidden';
+        this.dropdownItems.style.visibility = 'hidden';
     }
 
-    showPagination()
+    showElements()
     {
         this.paginationContainer.style.visibility = 'visible';
         this.paginationContainerArchive.style.visibility = 'visible';
+        this.dropdownItems.style.visibility = 'visible';
+    }
+
+    updateItemsPerPage(itemsPerPage)
+    {
+        //this.paginationService.updateItemsPerPage(itemsPerPage);
+        this.itemsPerPage = itemsPerPage;
+        this.currentPage = 1; // Reset to first page when items per page changes
+        this.renderPage(this.currentPage); // Re-render the page
     }
 }

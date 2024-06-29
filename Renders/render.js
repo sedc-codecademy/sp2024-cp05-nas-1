@@ -5,6 +5,7 @@ export class Render
   {
     //console.log(element);
     element.innerHTML = '';
+    console.log(news);
     news.forEach((newsItem) =>
       {
         element.innerHTML += `
@@ -24,7 +25,7 @@ export class Render
                       <p class="card-text">${newsItem.description.substring(0, 100)}...</p>
                       <p class="card-text"><small class="text-body-secondary">Published: ${dayjs(newsItem.pubDate).format('ddd, D MMM, YYYY HH:mm')}</small></p>
                       <a href="#" class="btn btn-primary view-full-story" data-id="${newsItem.id}">Read more</a>
-                      <a href="${newsItem.url}" class="btn btn-primary">View source</a>
+                      <a href="${newsItem.link}" class="btn btn-primary">View source</a>
                     </div>
 
                   </div>
