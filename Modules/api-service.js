@@ -1,13 +1,4 @@
-import { getQueryParams } from "./full-story.js";
-
-// const backEndFetch = async () => {
-//     const res = await fetch("https://localhost:5002/News");
-
-//     const jsonData = await res.json();
-//     console.log("tuka");
-//     console.log(jsonData);
-// }
-// backEndFetch();
+//import { getQueryParams } from "./full-story.js";
 export class ApiService {
     constructor()
     {
@@ -67,9 +58,8 @@ export class ApiService {
 */
 //#endregion
         this.jsonUrl = 'https://localhost:5002/News';
-        this.queryParams = getQueryParams();
+        //this.queryParams = getQueryParams();
     }
-    
     
     async fetchRssFeed()
     {
@@ -77,9 +67,9 @@ export class ApiService {
         {
             //debugger;
             //THIS WILL BE USED WHEN THE BACKEND IS AVAILABLE
-            const responese1 = await fetch(this.jsonUrl);
-            console.log(responese1);
-            const jsonData = await responese1.json();
+            const responese = await fetch(this.jsonUrl);
+            console.log(responese);
+            const jsonData = await responese.json();
             console.log(jsonData);
             return jsonData;
 
@@ -323,6 +313,7 @@ export class ApiService {
         // return '';
     }
 */
+
 /*   //TEST CODE
     getEnclosureUrl1(item)
     {
@@ -339,6 +330,7 @@ export class ApiService {
     }
 */
 
+/*   //TEST CODE
     filterNewsByQuery(newsData, queryParams)
     {
         if (queryParams.id)
@@ -347,4 +339,5 @@ export class ApiService {
         }
         return newsData;
     }
+*/
 }

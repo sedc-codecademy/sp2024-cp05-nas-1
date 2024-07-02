@@ -2,7 +2,6 @@ import { ApiService } from "./api-service.js";
 import { News } from "./news.js";
 import { RenderFullStory } from "../Renders/render-full-story.js";
 import { Render } from "../Renders/render.js";
-import { RenderArchive } from "../Renders/render-archive.js";
 import { PaginationService } from "./pagination-service.js";
 
 export class NewsService
@@ -23,7 +22,8 @@ export class NewsService
 
         this.dropdownItems = document.getElementById('dropdownItems');
 
-        this.testArray = [];
+        this.newsArray = [];
+        this.mappedNews = [];
 
         this.currentPage = this.paginationService.currentPage; // Current page
         this.itemsPerPage = this.paginationService.itemsPerPage; // Number of news items per page
@@ -31,6 +31,61 @@ export class NewsService
         //debugger;
         // Fetch news immediately
         this.mainNews();
+    }
+
+    initializeEventHandlers()
+    {
+        // Event listener for items per page dropdown
+        document.getElementById('itemsPerPageDropdown').addEventListener('click', (event) =>
+        {
+            if (event.target.classList.contains('dropdown-item'))
+            {
+                const itemsPerPage = parseInt(event.target.getAttribute('data-value'));
+                this.updateItemsPerPage(itemsPerPage);
+            }
+        });
+
+        // Function to set card layout - to be fixed using bootstrap
+        function setCardLayout(layoutType)
+        {
+            const cardContainer = document.getElementById('cardContainer');
+            cardContainer.className = ''; // Clear existing classes
+            switch (layoutType)
+            {
+                case 'single':
+                    cardContainer.classList.add('card-single');
+                    break;
+                case 'triple':
+                    cardContainer.classList.add('card-triple');
+                    break;
+                default:
+                    cardContainer.classList.add('card-single');
+                    break;
+            }
+        }
+
+        // Set default layout
+        setCardLayout('single');
+
+        // Event listener for the "Card Layout" dropdown
+        const layoutDropdown = document.getElementById('layoutDropdown');
+        layoutDropdown.addEventListener('click', (event) =>
+        {
+            debugger;
+            if (event.target.classList.contains('dropdown-item'))
+            {
+                const layoutType = event.target.getAttribute('data-value');
+                setCardLayout(layoutType);
+            }
+        });
+
+        // Event listener for the "Archive" link
+        const archiveLink = document.getElementById('archive-link');
+        archiveLink.addEventListener('click', async (event) =>
+        {
+            event.preventDefault(); // Prevent default link behavior
+            await this.archiveNews(); // Call archiveNews() to render archived content
+        });
     }
 
     async mainNews()
@@ -43,11 +98,13 @@ export class NewsService
                 throw new Error("No news found! Try again");
             }
 
-            //debugger;
-            const mappedNews = this.mapNewsData(newsData);
-            this.testArray = mappedNews;
+            //Sort the news by date before adding ID - this can help sort the archive by ID
+            const sortedNews = newsData.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+            this.mappedNews = this.mapNewsData(sortedNews);
+            
+            this.newsArray = this.mappedNews;
             this.currentPage = 1; // Start from the first page
-            this.renderPage(this.currentPage); // Render the first page
+            this.renderPage(this.currentPage, this.cardContainer, this.newsArray); // Render the first page
         }
         catch (error)
         {
@@ -56,7 +113,6 @@ export class NewsService
     }
 
     //add Id in front of every item.
-    //TO-DO: read the last Id from the json (json.lenght) and contiue from there
     mapNewsData(news)
     {
         return news.map((newsItem, index) => new News({ ...newsItem, id: index }));
@@ -64,147 +120,33 @@ export class NewsService
 
     async archiveNews()
     {
-        
         //debugger;
-        //READ FROM JSON FILE ORDERED BY DATE DESCENDING
-        // try
-        // {
-        //     const archivedNewsData = await this.apiService.fetchArchivedNews();
-        //     if (archivedNewsData.length === 0)
-        //     {
-        //         throw new Error("No archived news found!");
-        //     }
-        //     const mappedArchivedNews = this.mapNewsData(archivedNewsData);
-        //     this.testArray = mappedArchivedNews;
-        //     this.renderPage(this.currentPage, this.cardContainerArchive); // Render the first page of archive
-        //     }
-        //     catch (error)
-        //     {
-        //         this.notification.innerHTML = `<div class='alert-danger'>${error.message}</div>`;
-        //     }
-        // }
-        // try
-        // {
-        //     const newsData = await this.apiService.fetchAllNews();
-        //     if (newsData.length === 0)
-        //     {
-        //         throw new Error("No news found! Try again");
-        //     }
-        //     //debugger;
-        //     const mappedNews = this.mapNewsData(newsData);
-        //     this.testArray = mappedNews;
-        //     const mappedNewsJson = JSON.stringify(newsData, null, 2); // Convert to JSON with indentation
-        //     console.log("Mapped News JSON:", mappedNewsJson); // Log as JSON
-        //     console.log("Fetched News:", mappedNews[1]);
-        //     //console.log("mappedNews News:", mappedNews);
-        //     //console.log("testArray News:", testArray);
-        //     Render.main(mappedNews, this.cardContainer);
-        // }
-        // catch (error)
-        // {
-        //     this.notification.innerHTML = `<div class='alert-danger'>${error.message}</div>`;
-        // }
-        console.log(this.testArray);
-        console.log(this.cardContainer);
-        // this.cardContainer.style.display = 'none';
-        // this.cardContainerArchive.style.display = 'block';
-        //this.cardContainer.innerHTML = '';
-        RenderArchive.main(this.testArray, this.cardContainer); // or this.cardContainerArchive
+        this.cardContainer.innerHTML = "";
+
+        this.newsArray.sort((a, b) => b.id - a.id);
+
+        this.currentPage = 1; // Start from the first page
+        this.renderPage(this.currentPage, this.cardContainer, this.newsArray); // Render the first page
+
     }
+
     //Pagination
     //https://webdesign.tutsplus.com/pagination-with-vanilla-javascript--cms-41896t
-    renderPage(page, container = this.cardContainer, paginationContainerId = 'paginationContainer')
+    renderPage(page, container = this.cardContainer, newsData = this.newsArray)
     {
+        //debugger;
         const start = (page - 1) * this.itemsPerPage;
         const end = start + this.itemsPerPage;
-        const newsToRender = this.testArray.slice(start, end);
-        Render.main(newsToRender, cardContainer);
-        this.paginationService.renderPagination();//paginationContainerId);
+        const newsToRender = newsData.slice(start, end);
+        Render.main(newsToRender, container);
+        this.paginationService.renderPagination();
     }
-
-    // renderPagination(paginationContainerId = 'paginationContainer')
-    // {
-    //     const totalPages = Math.ceil(this.testArray.length / this.itemsPerPage);
-    //     const currentPage = this.currentPage;
-    //     const pageRange = 3; // Number of pages to show in the middle range
-    //     let paginationHTML = `<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">`;
-    
-    //     // Previous Button
-    //     paginationHTML += `
-    //         <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-    //             <a class="page-link" href="#" data-page="${currentPage - 1}" tabindex="-1">Previous</a>
-    //         </li>`;
-    
-    //     // First Page
-    //     if (currentPage > pageRange + 1)
-    //     {
-    //         paginationHTML += `
-    //             <li class="page-item">
-    //                 <a class="page-link" href="#" data-page="1">1</a>
-    //             </li>
-    //             <li class="page-item disabled">
-    //                 <a class="page-link" href="#" tabindex="-1">...</a>
-    //             </li>`;
-    //     }
-    
-    //     // Middle Pages
-    //     const startPage = Math.max(1, currentPage - pageRange);
-    //     const endPage = Math.min(totalPages, currentPage + pageRange);
-    
-    //     for (let i = startPage; i <= endPage; i++)
-    //     {
-    //         paginationHTML += `
-    //             <li class="page-item ${i === currentPage ? 'active' : ''}">
-    //                 <a class="page-link" href="#" data-page="${i}">${i}</a>
-    //             </li>`;
-    //     }
-    
-    //     // Last Page
-    //     if (currentPage < totalPages - pageRange)
-    //     {
-    //         paginationHTML += `
-    //             <li class="page-item disabled">
-    //                 <a class="page-link" href="#" tabindex="-1">...</a>
-    //             </li>
-    //             <li class="page-item">
-    //                 <a class="page-link" href="#" data-page="${totalPages}">${totalPages}</a>
-    //             </li>`;
-    //     }
-    
-    //     // Next Button
-    //     paginationHTML += `
-    //         <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-    //             <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
-    //         </li>
-    //     </ul></nav>`;
-    
-    //     const paginationContainer = document.getElementById(paginationContainerId);
-    //     paginationContainer.innerHTML = paginationHTML;
-    //     this.addPaginationEventListeners(paginationContainer);
-    // }
-
-    // addPaginationEventListeners(container = this.cardContainer)
-    // {
-    //     container.querySelectorAll('.page-link').forEach(button =>
-    //     {
-    //         button.addEventListener('click', (event) =>
-    //         {
-    //             event.preventDefault();
-    //             const page = parseInt(event.target.getAttribute('data-page'));
-    //             if (page > 0 && page <= Math.ceil(this.testArray.length / this.itemsPerPage))
-    //             {
-    //                 this.currentPage = page;
-    //                 this.renderPage(page, container.parentElement.previousElementSibling, container.id);
-    //             }
-    //         });
-    //     });
-    // }
 
     async viewFullStory(id)
     {
         try
         {
-            const newsItem = await this.testArray.find(item => item.id === id);
+            const newsItem = await this.newsArray.find(item => item.id === id);
             if (newsItem)
             {
                 
@@ -247,7 +189,6 @@ export class NewsService
 
     updateItemsPerPage(itemsPerPage)
     {
-        //this.paginationService.updateItemsPerPage(itemsPerPage);
         this.itemsPerPage = itemsPerPage;
         this.currentPage = 1; // Reset to first page when items per page changes
         this.renderPage(this.currentPage); // Re-render the page

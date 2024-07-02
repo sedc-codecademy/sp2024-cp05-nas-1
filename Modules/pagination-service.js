@@ -1,5 +1,3 @@
-//import { NewsService } from "./news-service.js";
-
 export class PaginationService
 {
     constructor(newsService)
@@ -12,7 +10,7 @@ export class PaginationService
 
     renderPagination()
     {
-        const totalPages = Math.ceil(this.newsService.testArray.length / this.itemsPerPage);
+        const totalPages = Math.ceil(this.newsService.newsArray.length / this.itemsPerPage);
         const currentPage = this.currentPage;
         const pageRange = 3; // Number of pages to show in the middle range
         let paginationHTML = `<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">`;
@@ -78,18 +76,11 @@ export class PaginationService
             {
                 event.preventDefault();
                 const page = parseInt(event.target.getAttribute('data-page'));
-                if (page > 0 && page <= Math.ceil(this.newsService.testArray.length / this.itemsPerPage)) {
+                if (page > 0 && page <= Math.ceil(this.newsService.newsArray.length / this.itemsPerPage)) {
                     this.currentPage = page;
                     this.newsService.renderPage(page);
                 }
             });
         });
     }
-
-    // updateItemsPerPage(itemsPerPage)
-    // {
-    //     this.itemsPerPage = itemsPerPage;
-    //     this.currentPage = 1; // Reset to first page when items per page changes
-    //     this.newsService.renderPage(this.currentPage);
-    // }
 }

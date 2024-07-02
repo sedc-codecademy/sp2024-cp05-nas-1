@@ -1,21 +1,16 @@
-//import { ApiService } from "../Modules/api-service.js";
 import { NewsService } from "../Modules/news-service.js";
-import '../Modules/ads.js';
-// import { RenderFullStory } from "../Modules/render-full-story.js";
-// debugger;
+import { Ads } from '../Modules/ads.js';
 
+//debugger;
+const adsInstance = new Ads();
 //const apiService = new ApiService();
 const newsService = new NewsService();
-
-// const ads = new Ads();
-// ads.displayAds();
-
-document.getElementById("latest-news-btn").addEventListener("click", () => newsService.fetchLatestNews());
-document.getElementById("oldest-news-btn").addEventListener("click", () => newsService.fetchOldestNews());
-
+newsService.initializeEventHandlers();
+//#region Event Listeners - moved to NewsService
+/*
 document.getElementById('itemsPerPageDropdown').addEventListener('click', function()
 {
-    debugger;
+    //debugger;
     if (event.target.classList.contains('dropdown-item'))
     {
         const itemsPerPage = parseInt(event.target.getAttribute('data-value'));
@@ -61,5 +56,7 @@ archiveLink.addEventListener('click', async function(event)
     event.preventDefault(); // Prevent default link behavior
     await newsService.archiveNews(); // Call archiveNews() to render archived content
 });
+*/
+//#endregion
 
 window.newsService = newsService;

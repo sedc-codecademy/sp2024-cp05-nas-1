@@ -5,7 +5,7 @@ export class News
         title,
         link,
         description,
-        publishDate,
+        pubDate,
         author,
         urlToImage
     })
@@ -14,7 +14,7 @@ export class News
         this.title = title;
         this.link = link;
         this.description = description;
-        this.publishDate = publishDate;
+        this.pubDate = pubDate;
         this.author = author;
         this.urlToImage = urlToImage;
     }
