@@ -23,3 +23,9 @@ NavBar
 notificationArchive
 cardContainerArchive
 archiveLink
+itemsPerPageDropdown
+layoutDropdown
+paginationContainer
+paginationContainerArchive
+data-bs-toggle
+dropdownItems

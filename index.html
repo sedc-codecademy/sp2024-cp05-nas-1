@@ -14,25 +14,22 @@
     <nav class="navbar">
         <div class="logo">NewsAggregator</div>
         <ul class="nav-links">
-            <!-- we are using single page site..... -->
             <li><a href="index.html">Home</a></li>
-            <!-- we are using single page site..... -->
             <li><a href="feedback.html">Feedback</a></li>
-            <!-- we are using single page site..... -->
             <li><a id="archive-link" href="#">Archive</a></li>
         </ul>
     </nav>
     <!-- NavBar -->
 
     <!-- Title -->
-    <div class="content">
+    <!-- <div class="content">
         <h1>News</h1>
         <div class="buttons">
             <button id="latest-news-btn">Latest News</button>
             <button id="oldest-news-btn">Oldest News</button>
         </div>
         <div class="cards-container" id="news-cards"></div>
-    </div>
+    </div> -->
     <!-- Title -->
 
     <div class="container mt-4">
@@ -53,12 +50,38 @@
 
             <!-- Main Content -->
             <div class="col-md-8">
+                
+                <div id="dropdownItems">
+                    <div class="dropdown d-inline-block mr-3">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Items per page
+                        </button>
+                        <ul class="dropdown-menu" id="itemsPerPageDropdown">
+                            <li><a class="dropdown-item" href="#" data-value="5">5</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="10">10</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="15">15</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown d-inline-block">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Card Layout
+                        </button>
+                        <ul class="dropdown-menu" id="layoutDropdown">
+                            <li><a class="dropdown-item" href="#" data-value="single">Single Column</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="triple">Triple Column</a></li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div id="notification"></div>
                 <div id="cardContainer"></div>
                 <div id="fullStoryContainer" style="display: none;">
                     <div id="fullStoryContent"></div>
                     <button class="btn btn-secondary mt-3" onclick="newsService.hideFullStory()">Back to news list</button>
                 </div>
+                <div id="paginationContainer" class="d-flex justify-content-center"></div>
+                <div id="paginationContainerArchive" class="d-flex justify-content-center"></div>
             </div>
             <!-- Main Content -->
 

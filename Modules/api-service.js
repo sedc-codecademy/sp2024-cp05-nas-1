@@ -1,8 +1,9 @@
-import { getQueryParams } from "./full-story.js";
+//import { getQueryParams } from "./full-story.js";
 export class ApiService {
     constructor()
     {
-        //When the backend is available, this will be replaced with the API endpoint
+ //#region This will be used if the backend is not available
+/*
         this.urls = [
         {
             source: 'MIA',
@@ -54,8 +55,10 @@ export class ApiService {
             pubDate: 'pubDate',
             urlToImage: { query: 'thumbnail' }
         }];
-        this.jsonUrl = 'Storage/news.json'; // Path to your JSON file
-        this.queryParams = getQueryParams();
+*/
+//#endregion
+        this.jsonUrl = 'https://localhost:5002/News';
+        //this.queryParams = getQueryParams();
     }
     
     async fetchRssFeed()
@@ -64,22 +67,26 @@ export class ApiService {
         {
             //debugger;
             //THIS WILL BE USED WHEN THE BACKEND IS AVAILABLE
-            // const responese1 = await fetch("https://localhost:7106/Menu");
-            // console.log(responese1);
-            // const jsonData = await responese1.json();
-            // console.log(jsonData);
-            const responses = await Promise.all(this.urls.map(urlConfig => fetch(urlConfig.feedUrl)));
-            const xmlData = await Promise.all(responses.map(response => response.text()));
+            const responese = await fetch(this.jsonUrl);
+            console.log(responese);
+            const jsonData = await responese.json();
+            console.log(jsonData);
+            return jsonData;
 
-            const allArticles = [];
-            for (let i = 0; i < xmlData.length; i++)
-            {
-                const parsedArticles = this.parseRss(xmlData[i], this.urls[i]);
-                allArticles.push(...parsedArticles);
-            }
+            /* //THIS WILL BE USED WHEN THE BACKEND IS NOT AVAILABLE
+            // const responses = await Promise.all(this.urls.map(urlConfig => fetch(urlConfig.feedUrl)));
+            // const xmlData = await Promise.all(responses.map(response => response.text()));
 
-            console.log(allArticles);
-            return allArticles;
+            // const allArticles = [];
+            // for (let i = 0; i < xmlData.length; i++)
+            // {
+            //     const parsedArticles = this.parseRss(xmlData[i], this.urls[i]);
+            //     allArticles.push(...parsedArticles);
+            // }
+
+            // console.log(allArticles);
+            // return allArticles;
+            */
         }
         catch (error)
         {
@@ -88,6 +95,8 @@ export class ApiService {
         }
     }
 
+//#region If there is a need to fetch JSON data + XML data from frontend, we use this
+/*  //Fetch JSON data from url OR path to file
     async fetchJsonData()
     {
         try
@@ -107,7 +116,8 @@ export class ApiService {
             return [];
         }
     }
-
+*/
+/*  //Fetch all news from RSS feed and JSON data
     async fetchAllNews()
     {
         try
@@ -127,8 +137,9 @@ export class ApiService {
             return [];
         }
     }
-
+*/
     //obsolite code once the backend is available
+/*  //Distinct articles based on title, publish date, and source form the RSS feed and the JSON data
     deDuplicateNews(newsData)
     {
         
@@ -148,8 +159,11 @@ export class ApiService {
     
         return uniqueArticles;
     }
+*/
 
-    //obsolite code once the backend is available
+//obsolite code once the backend is available
+/*  //parses the RSS feed and returns an array of articles
+    
     parseRss(xml, urlConfig)
     {
         const filteredXml = xml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
@@ -188,8 +202,10 @@ export class ApiService {
         console.log(articles);
         return articles;
     }
+*/
 
-    //obsolite code once the backend is available
+//obsolite code once the backend is available
+/*  //Stripping the HTML tags from the fetched RSS feed
     stripHtmlTags(text, allowedTags = [])
     {
         if (allowedTags.length === 0)
@@ -201,15 +217,19 @@ export class ApiService {
         const regex = new RegExp(`<(?!\/?(?:${tagList})\\b)[^>]*>`, 'gi');
         return text.replace(regex, '');
     }
+*/
 
-    //obsolite code once the backend is available
+//obsolite code once the backend is available
+/*  //Get the text content of an element in the XML
     getElementText(parent, tagName)
     {
         const element = parent.getElementsByTagName(tagName)[0];
         return element ? element.textContent.trim() : '';
     }
+*/
 
-    //obsolite code once the backend is available
+//obsolite code once the backend is available
+/*  //Get the enclosure (img) URL of an item in the XML
     getEnclosureUrl(item, imageConfig)
     {
         const element = item.querySelector(imageConfig.query);
@@ -232,8 +252,10 @@ export class ApiService {
         }
         return '';
     }
+*/
+//#endregion
 
-    //TEST
+/*   //TEST CODE
     getEnclosureUrl2(item)
     {
         // Debugging and logging
@@ -290,8 +312,9 @@ export class ApiService {
         // }
         // return '';
     }
+*/
 
-    //TEST
+/*   //TEST CODE
     getEnclosureUrl1(item)
     {
         const contentEncoded = item.getElementsByTagName('content:encoded')[0];
@@ -305,7 +328,9 @@ export class ApiService {
         }
         return '';
     }
-    
+*/
+
+/*   //TEST CODE
     filterNewsByQuery(newsData, queryParams)
     {
         if (queryParams.id)
@@ -314,4 +339,5 @@ export class ApiService {
         }
         return newsData;
     }
+*/
 }

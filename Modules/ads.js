@@ -1,32 +1,38 @@
-import { RenderAds } from './render-ads.js';
+import { RenderAds } from '../Renders/render-ads.js';
 
-// Example ad data
-const ads =
-[
-    { path: 'Media/adSample1.gif' },
-    { path: 'Media/adSample2.gif' },
-    { path: 'Media/adSample3.webp' },
-    { path: 'Media/adSample4.gif' }
-];
-
-// IDs of the ad containers
-const adContainerIds = ['left-ad-1', 'left-ad-2', 'right-ad-1', 'right-ad-2'];
-
-// Function to shuffle ads
-function shuffleAds()
+export class Ads
 {
-    // Shuffle the ad array
-    for (let i = ads.length - 1; i > 0; i--)
+    constructor()
     {
-        const j = Math.floor(Math.random() * (i + 1));
-        [ads[i], ads[j]] = [ads[j], ads[i]];
+        // Example ad data
+        this.ads =
+        [
+            { path: 'Media/adSample1.gif' },
+            { path: 'Media/adSample2.gif' },
+            { path: 'Media/adSample3.webp' },
+            { path: 'Media/adSample4.gif' }
+        ];
+        
+        // IDs of the ad containers
+        this.adContainerIds = ['left-ad-1', 'left-ad-2', 'right-ad-1', 'right-ad-2'];
+
+        this.shuffleAds = this.shuffleAds.bind(this); // Bind shuffleAds here
+
+        // Initial render
+        this.shuffleAds();
+        // Set interval to update ads every 30 seconds
+        setInterval(this.shuffleAds, 30000);
     }
-    // Render the shuffled ads
-    RenderAds.main(ads, adContainerIds);
+    // Function to shuffle ads
+    shuffleAds()
+    {
+        // Shuffle the ad array
+        for (let i = this.ads.length - 1; i > 0; i--)
+        {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.ads[i], this.ads[j]] = [this.ads[j], this.ads[i]];
+        }
+        // Render the shuffled ads
+        RenderAds.main(this.ads, this.adContainerIds);
+    }
 }
-
-// Initial render
-shuffleAds();
-
-// Set interval to update ads every 30 seconds (30000 milliseconds)
-setInterval(shuffleAds, 30000);

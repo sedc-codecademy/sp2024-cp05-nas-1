@@ -3,18 +3,18 @@ export class News
     constructor({
         id,
         title,
-        url,
+        link,
         description,
-        publishDate,
+        pubDate,
         author,
         urlToImage
     })
     {
         this.id = id;
         this.title = title;
-        this.url = url;
+        this.link = link;
         this.description = description;
-        this.publishDate = publishDate;
+        this.pubDate = pubDate;
         this.author = author;
         this.urlToImage = urlToImage;
     }
