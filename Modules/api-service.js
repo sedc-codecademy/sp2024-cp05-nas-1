@@ -57,7 +57,8 @@ export class ApiService {
         }];
 */
 //#endregion
-        this.jsonUrl = 'https://localhost:5002/News';
+        //this.jsonUrl = 'https://localhost:5002/News';
+        this.jsonUrl = 'https://dnisko.ddns.net:5002/News';
         //this.queryParams = getQueryParams();
     }
     
