@@ -1,12 +1,12 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-}
+} */
 
 
-.container {
+.containerFeedback {
     max-width: 600px;
     margin: 50px auto;
     padding: 20px;
@@ -14,10 +14,10 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
+/* h1 {
     text-align: center;
     color: #333;
-}
+} */
 
 .form-group {
     margin-bottom: 15px;
@@ -51,7 +51,7 @@ option {
     font-size: 16px;
 }
 
-button {
+#btnFeedback {
     width: 100%;
     padding: 10px;
     border: none;
@@ -62,6 +62,6 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+#btnFeedback:hover {
     background-color: #6f6f6f;
 }
