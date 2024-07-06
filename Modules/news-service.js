@@ -3,6 +3,7 @@ import { News } from "./news.js";
 import { RenderFullStory } from "../Renders/render-full-story.js";
 import { Render } from "../Renders/render.js";
 import { PaginationService } from "./pagination-service.js";
+import { RenderFeedback } from "../Renders/render-feedback.js";
 
 export class NewsService
 {
@@ -10,17 +11,20 @@ export class NewsService
     {
         this.apiService = new ApiService();
         this.paginationService = new PaginationService(this);
+        this.RenderFeedback = new RenderFeedback();
+
         this.notification = document.getElementById("notification");
         this.cardContainer = document.getElementById("cardContainer");
         this.fullStoryContainer = document.getElementById("fullStoryContainer");
         this.fullStoryContent = document.getElementById("fullStoryContent");
-        this.cardContainerArchive = document.getElementById("cardContainerArchive");
-        this.notificationArchive = document.getElementById("notificationArchive");
+        // this.cardContainerArchive = document.getElementById("cardContainerArchive");
+        // this.notificationArchive = document.getElementById("notificationArchive");
 
         this.paginationContainer = document.getElementById('paginationContainer');
         this.paginationContainerArchive = document.getElementById('paginationContainerArchive');
 
         this.dropdownItems = document.getElementById('dropdownItems');
+        this.spinnerWrapper = document.getElementById('spinner-wrapper');
 
         this.newsArray = [];
         this.mappedNews = [];
@@ -31,6 +35,111 @@ export class NewsService
         //debugger;
         // Fetch news immediately
         this.mainNews();
+        this.initializeEventHandlers();
+    }
+
+    async mainNews()
+    {
+        try
+        {
+            //this.showSpinner();
+            const newsData = await this.apiService.fetchRssFeed();
+            if (newsData.length === 0)
+            {
+                throw new Error("No news found! Try again");
+            }
+
+            //Sort the news by date before adding ID - this can help sort the archive by ID
+            const sortedNews = newsData.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+            this.mappedNews = this.mapNewsData(sortedNews);
+            
+            this.newsArray = this.mappedNews;
+            this.currentPage = 1; // Start from the first page
+            this.renderPage(this.currentPage, this.cardContainer, this.newsArray); // Render the first page
+        }
+        catch (error)
+        {
+            this.notification.innerHTML = `<div class='alert-danger'>${error.message}</div>`;
+        }
+        finally
+        {
+            //this.hideSpinner();
+        }
+    }
+
+    //add Id in front of every item.
+    mapNewsData(news)
+    {
+        return news.map((newsItem, index) => new News({ ...newsItem, id: index }));
+    }
+
+    async archiveNews()
+    {
+        // debugger;
+        this.cardContainer.innerHTML = "";
+
+        this.newsArray.sort((a, b) => b.id - a.id);
+
+        this.currentPage = 1; // Start from the first page
+        this.renderPage(this.currentPage, this.cardContainer, this.newsArray); // Render the first page
+        this.showElements();
+
+        // return new Promise(resolve =>
+        //     {
+                
+        //         setTimeout(() =>
+        //         {
+        //             this.showSpinner();
+        //             this.cardContainer.innerHTML = "";
+    
+        //             this.newsArray.sort((a, b) => b.id - a.id);
+            
+        //             this.currentPage = 1; // Start from the first page
+        //             this.renderPage(this.currentPage, this.cardContainer, this.newsArray); // Render the first page
+        //             this.showElements();
+        //             resolve();
+        //         }, 2000);
+    
+        //         this.hideSpinner();
+        //     });
+    }
+
+    //Pagination
+    //https://webdesign.tutsplus.com/pagination-with-vanilla-javascript--cms-41896t
+    renderPage(page, container = this.cardContainer, newsData = this.newsArray)
+    {
+        //debugger;
+        this.showSpinner();
+        const start = (page - 1) * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        const newsToRender = newsData.slice(start, end);
+        Render.main(newsToRender, container);
+        this.paginationService.renderPagination();
+        this.hideSpinner();
+    }
+
+    async viewFullStory(id)
+    {
+        try
+        {
+            const newsItem = await this.newsArray.find(item => item.id === id);
+            if (newsItem)
+            {
+                
+                this.cardContainer.style.display = 'none';
+                this.fullStoryContainer.style.display = 'block';
+                this.hideElements();
+                RenderFullStory.fullStory(newsItem, this.fullStoryContent);
+            }
+            else
+            {
+                console.error('News item not found');
+            }
+        }
+        catch (error)
+        {
+            console.error('Error viewing full story:', error);
+        }
     }
 
     initializeEventHandlers()
@@ -71,7 +180,7 @@ export class NewsService
         const layoutDropdown = document.getElementById('layoutDropdown');
         layoutDropdown.addEventListener('click', (event) =>
         {
-            debugger;
+            //debugger;
             if (event.target.classList.contains('dropdown-item'))
             {
                 const layoutType = event.target.getAttribute('data-value');
@@ -84,88 +193,24 @@ export class NewsService
         archiveLink.addEventListener('click', async (event) =>
         {
             event.preventDefault(); // Prevent default link behavior
-            await this.archiveNews(); // Call archiveNews() to render archived content
+            //await this.archiveNews(); // Call archiveNews() to render archived content
+            this.showSpinner();
+            await this.archiveNews();
+            this.hideSpinner();
         });
-    }
 
-    async mainNews()
-    {
-        try
+        
+        const feedbackLink = document.getElementById("feedback-link");
+        feedbackLink.addEventListener('click', async (event) =>
         {
-            const newsData = await this.apiService.fetchRssFeed();
-            if (newsData.length === 0)
-            {
-                throw new Error("No news found! Try again");
-            }
-
-            //Sort the news by date before adding ID - this can help sort the archive by ID
-            const sortedNews = newsData.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-            this.mappedNews = this.mapNewsData(sortedNews);
-            
-            this.newsArray = this.mappedNews;
-            this.currentPage = 1; // Start from the first page
-            this.renderPage(this.currentPage, this.cardContainer, this.newsArray); // Render the first page
-        }
-        catch (error)
-        {
-            this.notification.innerHTML = `<div class='alert-danger'>${error.message}</div>`;
-        }
-    }
-
-    //add Id in front of every item.
-    mapNewsData(news)
-    {
-        return news.map((newsItem, index) => new News({ ...newsItem, id: index }));
-    }
-
-    async archiveNews()
-    {
-        //debugger;
-        this.cardContainer.innerHTML = "";
-
-        this.newsArray.sort((a, b) => b.id - a.id);
-
-        this.currentPage = 1; // Start from the first page
-        this.renderPage(this.currentPage, this.cardContainer, this.newsArray); // Render the first page
+            event.preventDefault(); // Prevent default link behavior
+            this.showSpinner();
+            RenderFeedback.render(this.cardContainer);
+            this.hideElements();
+            this.hideSpinner();
+        });
 
     }
-
-    //Pagination
-    //https://webdesign.tutsplus.com/pagination-with-vanilla-javascript--cms-41896t
-    renderPage(page, container = this.cardContainer, newsData = this.newsArray)
-    {
-        //debugger;
-        const start = (page - 1) * this.itemsPerPage;
-        const end = start + this.itemsPerPage;
-        const newsToRender = newsData.slice(start, end);
-        Render.main(newsToRender, container);
-        this.paginationService.renderPagination();
-    }
-
-    async viewFullStory(id)
-    {
-        try
-        {
-            const newsItem = await this.newsArray.find(item => item.id === id);
-            if (newsItem)
-            {
-                
-                this.cardContainer.style.display = 'none';
-                this.fullStoryContainer.style.display = 'block';
-                this.hideElements();
-                RenderFullStory.fullStory(newsItem, this.fullStoryContent);
-            }
-            else
-            {
-                console.error('News item not found');
-            }
-        }
-        catch (error)
-        {
-            console.error('Error viewing full story:', error);
-        }
-    }
-
     hideFullStory()
     {
         this.fullStoryContainer.style.display = 'none';
@@ -192,5 +237,19 @@ export class NewsService
         this.itemsPerPage = itemsPerPage;
         this.currentPage = 1; // Reset to first page when items per page changes
         this.renderPage(this.currentPage); // Re-render the page
+    }
+
+    showSpinner()
+    {
+        console.log("Show spinner called");
+        this.spinnerWrapper.style.display = "flex";
+    }
+
+    hideSpinner()
+    {
+        setTimeout(() => 
+        {
+            this.spinnerWrapper.style.display = "none";
+        }, 1000);
     }
 }

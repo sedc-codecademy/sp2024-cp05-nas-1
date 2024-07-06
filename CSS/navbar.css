@@ -20,7 +20,13 @@
     font-size: 1.5em;
     font-weight: bold;
     transition: transform 0.3s ease;
+    width: 90px;
 }
+
+.logo > a > img{
+    max-width: 100%;
+    height: auto;
+} 
 
 .logo:hover {
     transform: scale(1.1);

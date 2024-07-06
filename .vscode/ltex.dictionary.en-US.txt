@@ -32,3 +32,5 @@ dropdownItems
 btnFeedback
 containerFeedback
 feedbackForm
+loadingCircle
+sr-only

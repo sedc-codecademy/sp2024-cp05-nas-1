@@ -1,5 +1,6 @@
 //import { getQueryParams } from "./full-story.js";
-export class ApiService {
+export class ApiService
+{
     constructor()
     {
  //#region This will be used if the backend is not available
@@ -57,20 +58,41 @@ export class ApiService {
         }];
 */
 //#endregion
-        //this.jsonUrl = 'https://localhost:5002/News';
-        this.jsonUrl = 'https://dnisko.ddns.net:5002/News';
-        //this.queryParams = getQueryParams();
+        this.jsonUrl = 
+        {
+            0: 'https://localhost:5002/News',
+            1: 'https://dnisko.ddns.net:5002/News'
+        }
     }
     
     async fetchRssFeed()
     {
         try
         {
-            //debugger;
-            //THIS WILL BE USED WHEN THE BACKEND IS AVAILABLE
-            const responese = await fetch(this.jsonUrl);
-            console.log(responese);
-            const jsonData = await responese.json();
+            let response;
+            try
+            {
+                response = await fetch(this.jsonUrl[0]);
+                console.log(response);
+                if(!response.ok)
+                {
+                    console.warn(`Failed to fetch from ${this.jsonUrl[0]} with status ${response.status}`);
+                    throw new Error(`Failed to fetch from ${this.jsonUrl[0]}`);
+                }
+            }
+            catch(error)
+            {
+                console.warn(`First fetch attempt failed: ${error.message}`);
+                response = await fetch(this.jsonUrl[1]);
+                
+                if (!response.ok)
+                {
+                    console.error(`Failed to fetch from ${this.jsonUrl[1]} with status ${response.status}`);
+                    throw new Error(`Failed to fetch from ${this.jsonUrl[1]}`);
+                }
+            }
+            console.log(response);
+            const jsonData = await response.json();
             console.log(jsonData);
             return jsonData;
 

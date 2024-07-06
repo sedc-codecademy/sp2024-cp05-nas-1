@@ -5,7 +5,7 @@ import { Ads } from '../Modules/ads.js';
 const adsInstance = new Ads();
 //const apiService = new ApiService();
 const newsService = new NewsService();
-newsService.initializeEventHandlers();
+//newsService.initializeEventHandlers();
 //#region Event Listeners - moved to NewsService
 /*
 document.getElementById('itemsPerPageDropdown').addEventListener('click', function()

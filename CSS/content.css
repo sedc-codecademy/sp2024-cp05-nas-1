@@ -2,10 +2,12 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    margin-top: 20px;
 }
 
-#dropdownItems .dropdown {
-    display: inline-block;
+#dropdownItems {
+    background-color: #f9f9f9;
+    padding: 10px;
 }
 
 .card {
