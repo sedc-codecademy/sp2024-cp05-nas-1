@@ -1,0 +1,102 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "DomainModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/DomainModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DomainModels.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DomainModels/1.0.0": {
+      "type": "project",
+      "path": "../DomainModels/DomainModels.csproj",
+      "msbuildProject": "../DomainModels/DomainModels.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "DomainModels >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Dinko\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\Docs\\VisualStudio\\Visual Studio 2022\\source\\repos\\dnisko\\NewsAggregatorRSSFeed\\Services\\Services.csproj",
+      "projectName": "Services",
+      "projectPath": "D:\\Docs\\VisualStudio\\Visual Studio 2022\\source\\repos\\dnisko\\NewsAggregatorRSSFeed\\Services\\Services.csproj",
+      "packagesPath": "C:\\Users\\Dinko\\.nuget\\packages\\",
+      "outputPath": "D:\\Docs\\VisualStudio\\Visual Studio 2022\\source\\repos\\dnisko\\NewsAggregatorRSSFeed\\Services\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\Dinko\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "c:\\program files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "D:\\Docs\\VisualStudio\\Visual Studio 2022\\source\\repos\\dnisko\\NewsAggregatorRSSFeed\\DomainModels\\DomainModels.csproj": {
+              "projectPath": "D:\\Docs\\VisualStudio\\Visual Studio 2022\\source\\repos\\dnisko\\NewsAggregatorRSSFeed\\DomainModels\\DomainModels.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "c:\\program files\\dotnet\\sdk\\8.0.302\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
