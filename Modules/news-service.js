@@ -17,8 +17,6 @@ export class NewsService
         this.cardContainer = document.getElementById("cardContainer");
         this.fullStoryContainer = document.getElementById("fullStoryContainer");
         this.fullStoryContent = document.getElementById("fullStoryContent");
-        // this.cardContainerArchive = document.getElementById("cardContainerArchive");
-        // this.notificationArchive = document.getElementById("notificationArchive");
 
         this.paginationContainer = document.getElementById('paginationContainer');
         this.paginationContainerArchive = document.getElementById('paginationContainerArchive');
@@ -29,11 +27,10 @@ export class NewsService
         this.newsArray = [];
         this.mappedNews = [];
 
-        this.currentPage = this.paginationService.currentPage; // Current page
-        this.itemsPerPage = this.paginationService.itemsPerPage; // Number of news items per page
+        this.currentPage = this.paginationService.currentPage;
+        this.itemsPerPage = this.paginationService.itemsPerPage;
 
         //debugger;
-        // Fetch news immediately
         this.mainNews();
         this.initializeEventHandlers();
     }
@@ -42,20 +39,18 @@ export class NewsService
     {
         try
         {
-            //this.showSpinner();
             const newsData = await this.apiService.fetchRssFeed();
             if (newsData.length === 0)
             {
                 throw new Error("No news found! Try again");
             }
 
-            //Sort the news by date before adding ID - this can help sort the archive by ID
             const sortedNews = newsData.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
             this.mappedNews = this.mapNewsData(sortedNews);
             
             this.newsArray = this.mappedNews;
-            this.currentPage = 1; // Start from the first page
-            this.renderPage(this.currentPage, this.cardContainer, this.newsArray); // Render the first page
+            this.currentPage = 1;
+            this.renderPage(this.currentPage, this.cardContainer, this.newsArray);
         }
         catch (error)
         {
@@ -67,7 +62,6 @@ export class NewsService
         }
     }
 
-    //add Id in front of every item.
     mapNewsData(news)
     {
         return news.map((newsItem, index) => new News({ ...newsItem, id: index }));
@@ -80,28 +74,9 @@ export class NewsService
 
         this.newsArray.sort((a, b) => b.id - a.id);
 
-        this.currentPage = 1; // Start from the first page
-        this.renderPage(this.currentPage, this.cardContainer, this.newsArray); // Render the first page
+        this.currentPage = 1;
+        this.renderPage(this.currentPage, this.cardContainer, this.newsArray);
         this.showElements();
-
-        // return new Promise(resolve =>
-        //     {
-                
-        //         setTimeout(() =>
-        //         {
-        //             this.showSpinner();
-        //             this.cardContainer.innerHTML = "";
-    
-        //             this.newsArray.sort((a, b) => b.id - a.id);
-            
-        //             this.currentPage = 1; // Start from the first page
-        //             this.renderPage(this.currentPage, this.cardContainer, this.newsArray); // Render the first page
-        //             this.showElements();
-        //             resolve();
-        //         }, 2000);
-    
-        //         this.hideSpinner();
-        //     });
     }
 
     //Pagination
@@ -144,7 +119,7 @@ export class NewsService
 
     initializeEventHandlers()
     {
-        // Event listener for items per page dropdown
+        //items per page dropdown click
         document.getElementById('itemsPerPageDropdown').addEventListener('click', (event) =>
         {
             if (event.target.classList.contains('dropdown-item'))
@@ -154,6 +129,8 @@ export class NewsService
             }
         });
 
+        //#region Card Layout (NOT WORKING)
+        
         // Function to set card layout - to be fixed using bootstrap
         function setCardLayout(layoutType)
         {
@@ -187,23 +164,23 @@ export class NewsService
                 setCardLayout(layoutType);
             }
         });
-
-        // Event listener for the "Archive" link
+        //#endregion
+        
+        //archive link click
         const archiveLink = document.getElementById('archive-link');
         archiveLink.addEventListener('click', async (event) =>
         {
-            event.preventDefault(); // Prevent default link behavior
-            //await this.archiveNews(); // Call archiveNews() to render archived content
+            event.preventDefault();
             this.showSpinner();
             await this.archiveNews();
             this.hideSpinner();
         });
 
-        
+        //feedback link click
         const feedbackLink = document.getElementById("feedback-link");
         feedbackLink.addEventListener('click', async (event) =>
         {
-            event.preventDefault(); // Prevent default link behavior
+            event.preventDefault();
             this.showSpinner();
             RenderFeedback.render(this.cardContainer);
             this.hideElements();
@@ -235,8 +212,8 @@ export class NewsService
     updateItemsPerPage(itemsPerPage)
     {
         this.itemsPerPage = itemsPerPage;
-        this.currentPage = 1; // Reset to first page when items per page changes
-        this.renderPage(this.currentPage); // Re-render the page
+        this.currentPage = 1;
+        this.renderPage(this.currentPage);
     }
 
     showSpinner()

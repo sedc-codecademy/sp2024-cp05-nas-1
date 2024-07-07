@@ -4,15 +4,15 @@ export class PaginationService
     {
         this.newsService = newsService;
         this.paginationContainer = document.getElementById('paginationContainer');
-        this.currentPage = 1; // Current page
-        this.itemsPerPage = 5; // Number of news items per page
+        this.currentPage = 1;
+        this.itemsPerPage = 5;
     }
 
     renderPagination()
     {
         const totalPages = Math.ceil(this.newsService.newsArray.length / this.itemsPerPage);
         const currentPage = this.currentPage;
-        const pageRange = 3; // Number of pages to show in the middle range
+        const pageRange = 3;
         let paginationHTML = `<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">`;
     
         // Previous Button
