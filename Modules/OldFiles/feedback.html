@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">NewsAggregator</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a id="archive-link" href="#">Archive</a></li>
+        </ul>
+    </nav>
+
+    <div class="containerFeedback">
+        <h1>Feedback Form</h1>
+        <form id="feedbackForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <select id="rating" name="rating" required>
+                    <option value="">Select rating</option>
+                    <option value="1">😞 1 - Poor</option>
+                    <option value="2">😐 2 - Fair</option>
+                    <option value="3">🙂 3 - Good</option>
+                    <option value="4">😊 4 - Very Good</option>
+                    <option value="5">😃 5 - Excellent</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comments">Comments:</label>
+                <textarea id="comments" name="comments" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btnFeedback">Submit Feedback</button>
+        </form>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-left">
+                <h3>NewsAggregator<span>Logo</span></h3>
+                <!-- <p class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="news.html">News</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="about.html">About</a>
+                </p> -->
+                <p class="footer-company-name">&copy; 2024 News Aggregator. All rights reserved.</p>
+            </div>
+    
+            <div class="footer-center">
+                <div>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p><span>21 Revolution Street</span> Skopje, Macedonia</p>
+                </div>
+    
+                <div>
+                    <i class="fas fa-phone-alt"></i>
+                    <p>+1 555 123456</p>
+                </div>
+    
+                <div>
+                    <i class="fas fa-envelope"></i>
+                    <p><a href="mail to:support@newsaggregator.com">support@newsaggregator.com</a></p>
+                </div>
+            </div>
+    
+            <div class="footer-right">
+                <p class="footer-about">
+                    <span>About the company</span>
+                    NewsAggregator is a news platform providing the latest and most accurate news from around the world.
+                </p>
+    
+                <div class="footer-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab Instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="./Modules/feedback.js"></script>
+</body>
+</html>

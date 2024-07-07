@@ -1,0 +1,12 @@
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\bin\Debug\net6.0\DomainModels.deps.json
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\bin\Debug\net6.0\DomainModels.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\bin\Debug\net6.0\DomainModels.pdb
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\obj\Debug\net6.0\DomainModels.GeneratedMSBuildEditorConfig.editorconfig
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\obj\Debug\net6.0\DomainModels.AssemblyInfoInputs.cache
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\obj\Debug\net6.0\DomainModels.AssemblyInfo.cs
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\obj\Debug\net6.0\DomainModels.csproj.CoreCompileInputs.cache
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\obj\Debug\net6.0\DomainModels.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\obj\Debug\net6.0\refint\DomainModels.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\obj\Debug\net6.0\DomainModels.pdb
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\obj\Debug\net6.0\ref\DomainModels.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\DomainModels\obj\Debug\net6.0\DomainModels.sourcelink.json

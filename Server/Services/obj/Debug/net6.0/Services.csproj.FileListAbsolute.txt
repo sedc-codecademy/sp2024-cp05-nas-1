@@ -1,0 +1,16 @@
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\bin\Debug\net6.0\Services.deps.json
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\bin\Debug\net6.0\Services.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\bin\Debug\net6.0\Services.pdb
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\bin\Debug\net6.0\DomainModels.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\bin\Debug\net6.0\DomainModels.pdb
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\Services.csproj.AssemblyReference.cache
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\Services.AssemblyInfoInputs.cache
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\Services.AssemblyInfo.cs
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\Services.csproj.CoreCompileInputs.cache
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\Services.csproj.Up2Date
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\Services.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\refint\Services.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\Services.pdb
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\ref\Services.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\Services\obj\Debug\net6.0\Services.sourcelink.json
