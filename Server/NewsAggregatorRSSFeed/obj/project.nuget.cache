@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "Sfr6PGJF1wo=",
+  "dgSpecHash": "iF11Ai2zXkI=",
   "success": true,
   "projectFilePath": "D:\\Docs\\VisualStudio\\Visual Studio 2022\\source\\repos\\dnisko\\NewsAggregatorRSSFeed\\NewsAggregatorRSSFeed\\NewsAggregatorRSSFeed.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Dinko\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
+    "C:\\Users\\Dinko\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Dinko\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "C:\\Users\\Dinko\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\Dinko\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

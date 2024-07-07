@@ -35,3 +35,7 @@ D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFee
 D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\NewsAggregatorRSSFeed\obj\Debug\net6.0\ref\NewsAggregatorRSSFeed.dll
 D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\NewsAggregatorRSSFeed\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\NewsAggregatorRSSFeed\obj\Debug\net6.0\NewsAggregatorRSSFeed.sourcelink.json
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\NewsAggregatorRSSFeed\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\NewsAggregatorRSSFeed\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\NewsAggregatorRSSFeed\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\Docs\VisualStudio\Visual Studio 2022\source\repos\dnisko\NewsAggregatorRSSFeed\NewsAggregatorRSSFeed\bin\Debug\net6.0\Newtonsoft.Json.dll

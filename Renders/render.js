@@ -24,6 +24,8 @@ export class Render
                       <h5 class="card-title">${newsItem.title}</h5>
                       <p class="card-text">${newsItem.description.substring(0, 100)}...</p>
                       <p class="card-text"><small class="text-body-secondary">Published: ${dayjs(newsItem.pubDate).format('ddd, D MMM, YYYY HH:mm')}</small></p>
+                      <p class="card-text">Source: ${newsItem.source}</p>
+                      <p class="card-text">Thrust meter: ${newsItem.trustScore}</p>
                       <a href="#" class="btn btn-primary view-full-story" data-id="${newsItem.id}">Read more</a>
                       <a href="${newsItem.link}" class="btn btn-primary">View source</a>
                     </div>
